@@ -47,7 +47,7 @@ export function RegisterForm() {
             const url = "http://localhost:8080/auth/register";
             let response = await fetch(url, {
                 method: 'POST',
-                 headers: {
+                headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData),
