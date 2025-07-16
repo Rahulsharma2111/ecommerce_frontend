@@ -1,27 +1,16 @@
 import { useState } from "react";
+import { useLocation } from 'react-router-dom';
+import './RegisterUser.css';
+export default function RegisterForm(props) {
 
-function Register() {
-    return (
-        <>
-            <center>
-                <div><h3>Register Or Sign Up</h3></div>
-                <RegisterForm></RegisterForm>
-
-            </center>
-        </>
-    );
-}
-export default Register;
-
-
-
-export function RegisterForm() {
+    const location = useLocation();
+    const { username, email, password } = location.state || {};
 
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         mobileNumber: '',
-        email: '',
+        email: email || '',
         age: '',
         houseNumber: '',
         street: '',
@@ -29,8 +18,8 @@ export function RegisterForm() {
         district: '',
         state: '',
         zipcode: '',
-        username: '',
-        password: ''
+        username: username || '',
+        password: password || ''
     });
     function handleInputChange(e) {
         console.log(e.target.value);
@@ -61,9 +50,15 @@ export function RegisterForm() {
     }
     return (
         <>
-            <center>
+            <div className="bg-shape circle"></div>
+            <div className="bg-shape square"></div>
+            <div className="bg-shape triangle"></div>
+            <div className="register-form-container">
+                <div><h3>Register Or Sign Up</h3></div>
+                <br />
+                <div></div>
                 <form onSubmit={fromDataHandle}>
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="first_name">First name</label>
                         <input id="first_name" type="text" placeholder="Enter your first name"
                             name="firstName"
@@ -71,7 +66,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="last_name">Last name</label>
                         <input id="last_name" type="text" placeholder="Enter your last name"
                             name="lastName"
@@ -79,7 +74,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="mobile_number">Mobile Number</label>
                         <input id="mobile_number" type="text" placeholder="Enter your mobile number"
                             name="mobileNumber"
@@ -87,15 +82,8 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
-                        <label htmlFor="email">E-mail</label>
-                        <input id="email" type="text" placeholder="Enter your email id"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange} />
-                    </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="age">Age</label>
                         <input id="age" type="number" placeholder="Enter your age" min={18} max={120}
                             name="age"
@@ -103,7 +91,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="house_number">House Number</label>
                         <input id="house_number" type="text" placeholder="Enter your house number"
                             name="houseNumber"
@@ -111,7 +99,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="street">Street</label>
                         <input id="street" type="text" placeholder="street name"
                             name="street"
@@ -119,7 +107,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="address">Address</label>
                         <input id="address" type="text" placeholder="Enter address"
                             name="address"
@@ -127,7 +115,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="district">District</label>
                         <input id="district" type="text" placeholder="Enter district"
                             name="district"
@@ -135,7 +123,7 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="state">State</label>
                         <input id="state" type="text" placeholder="Enter state"
                             name="state"
@@ -143,27 +131,11 @@ export function RegisterForm() {
                             onChange={handleInputChange} />
                     </div>
 
-                    <div>
+                    <div className="form-group">
                         <label htmlFor="zipcode">Pincode</label>
                         <input id="zipcode" type="number" placeholder="Enter pincode"
                             name="zipcode"
                             value={formData.zipcode}
-                            onChange={handleInputChange} />
-                    </div>
-
-                    <div>
-                        <label htmlFor="username">Username</label>
-                        <input id="username" type="text" placeholder="Enter username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleInputChange} />
-                    </div>
-
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input id="password" type="text" placeholder="Enter strong password"
-                            name="password"
-                            value={formData.password}
                             onChange={handleInputChange} />
                     </div>
 
@@ -175,7 +147,7 @@ export function RegisterForm() {
                 </form>
 
 
-            </center>
+            </div>
         </>
     );
 }

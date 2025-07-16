@@ -1,0 +1,169 @@
+.purchase-history {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.purchase-history h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.empty-history {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.empty-history p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.empty-history button {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.order-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+}
+
+.order-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+.order-summary h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.order-date {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status-badge.delivered {
+  background: #e6f7ee;
+  color: #00a65a;
+}
+
+.status-badge.shipped {
+  background: #e6f2ff;
+  color: #0066cc;
+}
+
+.order-total {
+  font-weight: bold;
+}
+
+.toggle-icon {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+
+.toggle-icon.open {
+  transform: rotate(180deg);
+}
+
+.order-details {
+  background: #f9f9f9;
+  padding: 15px;
+  border-top: 1px solid #eee;
+}
+
+.items-list {
+  margin-bottom: 20px;
+}
+
+.items-list h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  margin: 0;
+  font-weight: bold;
+}
+
+.item-quantity {
+  margin: 5px 0 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.item-price {
+  font-weight: bold;
+}
+
+.order-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.meta-section {
+  flex: 1;
+  min-width: 200px;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.meta-section h5 {
+  margin: 0 0 15px 0;
+  font-size: 15px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.summary-row.total {
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
