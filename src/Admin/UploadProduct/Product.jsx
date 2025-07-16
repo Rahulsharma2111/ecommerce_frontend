@@ -41,7 +41,7 @@ const ProductUploadForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       console.log('Product submitted:', productData);
@@ -66,7 +66,7 @@ const ProductUploadForm = () => {
   return (
     <div className="product-upload-container">
       <h2>Upload New Product</h2>
-      
+
       <form onSubmit={handleSubmit} className="product-form">
         <div className="form-group image-upload">
           <label htmlFor="product-image">Product Image</label>
