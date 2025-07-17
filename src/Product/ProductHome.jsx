@@ -4,7 +4,7 @@ export default function ProductDisplay() {
             <h1 style={styles.pageTitle}>Featured Products</h1>
             <div style={styles.productsGrid}>
                 <ProductCard 
-                    imageUrl="./images/Screenshot (8).png" 
+                    imageUrl="/images/Screenshot (8).png" 
                     name="Premium Headphones"
                     price={199.99}
                     category="Electronics"
@@ -12,7 +12,7 @@ export default function ProductDisplay() {
                     description="Noise-cancelling wireless headphones with 30hr battery life"
                 />
                 <ProductCard 
-                    imageUrl="https://via.placeholder.com/250" 
+                    imageUrl="src/images/Screenshot (11).png" 
                     name="Smart Watch"
                     price={159.99}
                     category="Wearables"

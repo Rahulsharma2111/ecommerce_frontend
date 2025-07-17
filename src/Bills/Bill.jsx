@@ -1,10 +1,7 @@
 
 export default function BillReceipt({ products, customerInfo }) {
-  // Calculate subtotal
   const subtotal = products.reduce((sum, product) => sum + (product.price * product.quantity), 0);
-  // Calculate tax (assuming 10% tax rate)
-  const tax = subtotal * 0.1;
-  // Calculate total
+  const tax = subtotal * 0.0;
   const total = subtotal + tax;
 
   return (
@@ -74,19 +71,6 @@ export default function BillReceipt({ products, customerInfo }) {
   );
 }
 
-// Sample data structure for props
-BillReceipt.defaultProps = {
-  customerInfo: {
-    name: "John Doe",
-    email: "john@example.com",
-    phone: "(555) 123-4567"
-  },
-  products: [
-    { name: "Premium Headphones", price: 199.99, quantity: 1 },
-    { name: "Smart Watch", price: 159.99, quantity: 2 },
-    { name: "Wireless Keyboard", price: 79.99, quantity: 1 }
-  ]
-};
 
 const styles = {
   receiptContainer: {

@@ -1,6 +1,6 @@
 
 body {
-  background: linear-gradient(120deg, #89f7fe4f 0%, #141d69d4 100%);
+  background: linear-gradient(149deg, #8b58c34f 0%, #313872d4 100%);
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
@@ -20,19 +20,19 @@ body {
 .circle {
   width: 100px;
   height: 100px;
-  background: #cc080800;
+  background: #be00db;
   border-radius: 50%;
-  top: 10%;
-  left: 10%;
+  top: 20%;
+  left: 13%;
   animation-delay: 0s;
 }
 
 .square {
   width: 120px;
   height: 120px;
-  background: #3d1ec900;
+  background: #c7000afb;
   top: 50%;
-  left: 80%;
+  left: 70%;
   animation-delay: 2s;
 }
 
@@ -41,7 +41,7 @@ body {
   height: 0;
   border-left: 60px solid transparent;
   border-right: 60px solid transparent;
-  border-bottom: 100px solid #ced10d00;
+  border-bottom: 100px solid #040084;
   top: 80%;
   left: 20%;
   animation-delay: 4s;
@@ -62,7 +62,7 @@ body {
   max-width: 600px;
   margin: 60px auto;
   background: rgba(255, 255, 255, 0.15);
-  padding: 30px 40px;
+  padding: 30px 57px 30px 40px;
   border-radius: 15px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(0.5px);
