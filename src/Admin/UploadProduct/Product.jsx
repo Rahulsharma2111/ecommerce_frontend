@@ -8,6 +8,7 @@ const ProductUploadForm = () => {
     price: '',
     category: '',
     brand: '',
+    stock: '',
     details: ''
   });
 
@@ -76,6 +77,7 @@ const ProductUploadForm = () => {
           price: '',
           category: '',
           brand: '',
+          stock: '',
           details: ''
         });
         setPreviewImage(null);
@@ -117,6 +119,21 @@ const ProductUploadForm = () => {
             value={productData.product_name}
             onChange={handleChange}
             placeholder="Wireless Keyboard"
+            required
+          />
+        </div>
+
+        
+        <div className="form-group">
+          <label htmlFor="stock">Stock</label>
+          <input
+            type="number"
+            id="stock"
+            name="stock"
+            value={productData.stock}
+            onChange={handleChange}
+            placeholder="50"
+            min="0"
             required
           />
         </div>

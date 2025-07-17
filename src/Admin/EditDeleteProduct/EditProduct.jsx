@@ -35,6 +35,7 @@ const [products, setProducts] = useState([
       price: '',
       category: '',
       stock: '',
+      brand: '',
       image: '',
       details: ''
     }]);
@@ -69,6 +70,7 @@ const [products, setProducts] = useState([
     price: '',
     category: '',
     stock: '',
+    brand: '',
     details: ''
   });
 
@@ -80,6 +82,7 @@ const [products, setProducts] = useState([
         price: editingProduct.price,
         category: editingProduct.category,
         stock: editingProduct.stock,
+        brand: editingProduct.brand,
         details: editingProduct.details
       });
     }
@@ -198,6 +201,10 @@ const [products, setProducts] = useState([
                   <span className="label">Category:</span>
                   <span className="value">{product.category}</span>
                 </div>
+                 <div className="detail-row">
+                  <span className="label">Brand:</span>
+                  <span className="value">{product.brand}</span>
+                </div>
                 <div className="detail-row">
                   <span className="label">Stock:</span>
                   <span className={`value ${product.stock < 10 ? 'low-stock' : ''}`}>
@@ -275,6 +282,17 @@ const [products, setProducts] = useState([
                   type="text"
                   name="category"
                   value={editFormData.category}
+                  onChange={handleEditFormChange}
+                  required
+                />
+              </div>
+
+                  <div className="form-group">
+                <label>Brand</label>
+                <input
+                  type="text"
+                  name="brand"
+                  value={editFormData.brand}
                   onChange={handleEditFormChange}
                   required
                 />
