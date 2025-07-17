@@ -3,12 +3,12 @@ import './ProductStyle.css';
 import './ProductListStyle.css';
 const ProductUploadForm = () => {
   const [productData, setProductData] = useState({
-    imageUrl: '',
-    name: '',
+    image: '',
+    product_name: '',
     price: '',
     category: '',
     brand: '',
-    description: ''
+    details: ''
   });
 
   const [previewImage, setPreviewImage] = useState(null);
@@ -42,26 +42,48 @@ const ProductUploadForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const createPoduct = async () => {
+      try {
+        const url = "http://localhost:8282/product/add";
+        let response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(productData),
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+      } catch (error) {
+        console.error('Error creating product:', error);
+      }
+
+    }
     // Simulate API call
     setTimeout(() => {
       console.log('Product submitted:', productData);
+      createPoduct();
       setIsSubmitting(false);
       setSuccessMessage('Product uploaded successfully!');
       // Reset form after 2 seconds
       setTimeout(() => {
         setProductData({
-          imageUrl: '',
-          name: '',
+          image: '',
+          product_name: '',
           price: '',
           category: '',
           brand: '',
-          description: ''
+          details: ''
         });
         setPreviewImage(null);
         setSuccessMessage('');
       }, 2000);
     }, 1500);
   };
+
 
   return (
     <div className="product-upload-container">
@@ -91,8 +113,8 @@ const ProductUploadForm = () => {
           <input
             type="text"
             id="name"
-            name="name"
-            value={productData.name}
+            name="product_name"
+            value={productData.product_name}
             onChange={handleChange}
             placeholder="Wireless Keyboard"
             required
@@ -144,8 +166,8 @@ const ProductUploadForm = () => {
           <label htmlFor="description">Description</label>
           <textarea
             id="description"
-            name="description"
-            value={productData.description}
+            name="details"
+            value={productData.details}
             onChange={handleChange}
             placeholder="Ergonomic design with 2-year battery life"
             required

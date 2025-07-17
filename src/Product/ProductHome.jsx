@@ -1,86 +1,80 @@
+import { useState, useEffect } from 'react';
 export default function ProductDisplay() {
+
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+          useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:8282/product/all-items');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) return <div>Loading products...</div>;
+  if (error) return <div>Error: {error}</div>;
+
     return (
         <div style={styles.pageContainer}>
             <h1 style={styles.pageTitle}>Featured Products</h1>
             <div style={styles.productsGrid}>
-                <ProductCard 
-                    imageUrl="/images/Screenshot (8).png" 
-                    name="Premium Headphones"
-                    price={199.99}
-                    category="Electronics"
-                    brand="Sony"
-                    description="Noise-cancelling wireless headphones with 30hr battery life"
-                />
-                <ProductCard 
-                    imageUrl="src/images/Screenshot (11).png" 
-                    name="Smart Watch"
-                    price={159.99}
-                    category="Wearables"
-                    brand="Samsung"
-                    description="Fitness tracking, heart rate monitor, and smartphone notifications"
-                />
-                <ProductCard 
+                {products.map(product => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+                
+
+                {/* <ProductCard 
                     imageUrl="https://via.placeholder.com/250" 
                     name="Wireless Keyboard"
                     price={79.99}
                     category="Accessories"
                     brand="Logitech"
                     description="Ergonomic design with 2-year battery life"
-                />
-                <ProductCard 
-                    imageUrl="https://via.placeholder.com/250" 
-                    name="Wireless Keyboard"
-                    price={79.99}
-                    category="Accessories"
-                    brand="Logitech"
-                    description="Ergonomic design with 2-year battery life"
-                />
-                <ProductCard 
-                    imageUrl="https://via.placeholder.com/250" 
-                    name="Wireless Keyboard"
-                    price={79.99}
-                    category="Accessories"
-                    brand="Logitech"
-                    description="Ergonomic design with 2-year battery life"
-                />
-                <ProductCard 
-                    imageUrl="https://via.placeholder.com/250" 
-                    name="Wireless Keyboard"
-                    price={79.99}
-                    category="Accessories"
-                    brand="Logitech"
-                    description="Ergonomic design with 2-year battery life"
-                />
+                /> */}
             </div>
         </div>
     );
 }
 
-export function ProductCard({ imageUrl, name, price, category, brand, description }) {
+export function ProductCard({ product }) {
     return (
         <div style={styles.card}>
             <div style={styles.imageContainer}>
                 <img 
-                    src={imageUrl} 
-                    alt={name} 
+                    src={product.image} 
+                    alt={product.product_name} 
                     style={styles.productImage} 
                 />
             </div>
             <div style={styles.productInfo}>
-                <h3 style={styles.productName}>{name}</h3>
+                <h3 style={styles.productName}>{product.product_name}</h3>
                 <div style={styles.detailRow}>
                     <span style={styles.detailLabel}>Price:</span>
-                    <span style={styles.price}>${price.toFixed(2)}</span>
+                    <span style={styles.price}>${product.price.toFixed(2)}</span>
                 </div>
                 <div style={styles.detailRow}>
                     <span style={styles.detailLabel}>Category:</span>
-                    <span>{category}</span>
+                    <span>{product.category}</span>
                 </div>
                 <div style={styles.detailRow}>
                     <span style={styles.detailLabel}>Brand:</span>
-                    <span>{brand}</span>
+                    <span>{product.brand}</span>
                 </div>
-                <p style={styles.description}>{description}</p>
+                <p style={styles.description}>{product.details}</p>
                 <div style={styles.buttonContainer}>
                     <button style={styles.addToCartButton}>Add to Cart</button>
                     <button style={styles.buyNowButton}>Buy Now</button>
