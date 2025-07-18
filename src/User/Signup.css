@@ -41,3 +41,42 @@
 .signup-container button:hover {
   background-color: #0056b3;
 }
+
+
+.auth-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 38px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.auth-btn {
+  padding: 10px 20px;
+  width: 200px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.login-btn {
+  background-color: #4CAF50;
+}
+
+.login-btn:hover {
+  background-color: #45a049;
+}
+
+.signup-btn {
+  background-color: #f44336;
+}
+
+.signup-btn:hover {
+  background-color: #d32f2f;
+}

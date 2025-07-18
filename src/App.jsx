@@ -5,7 +5,7 @@ function WelcomePage() {
     return (
         <>
             <center>
-                <div><h2>Welcome to E-commece site</h2></div>
+                {/* <div><h2>Welcome to E-commece site</h2></div> */}
             
                 <Signup />
                 {/* <ProductDisplay/> */}

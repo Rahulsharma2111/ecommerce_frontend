@@ -1,41 +1,42 @@
 import { useState, useEffect } from 'react';
+import { loadRazorpay } from '../utils/razorpay';
 export default function ProductDisplay() {
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-          useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('http://localhost:8282/product/all-items');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('http://localhost:8282/product/all-items');
 
-    fetchProducts();
-  }, []);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
-  if (loading) return <div>Loading products...</div>;
-  if (error) return <div>Error: {error}</div>;
+                const data = await response.json();
+                setProducts(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    if (loading) return <div>Loading products...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div style={styles.pageContainer}>
             <h1 style={styles.pageTitle}>Featured Products</h1>
             <div style={styles.productsGrid}>
                 {products.map(product => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-                
+                    <ProductCard key={product.id} product={product} />
+                ))}
+
 
                 {/* <ProductCard 
                     imageUrl="https://via.placeholder.com/250" 
@@ -51,13 +52,135 @@ export default function ProductDisplay() {
 }
 
 export function ProductCard({ product }) {
+    //     const handleBuyNow = async () => {
+    //         // Initialize Razorpay
+    //         const options = {
+    //             key: 'YOUR_RAZORPAY_KEY_ID', // Replace with your Razorpay key
+    //             amount: product.price * 100, // Amount in paise (so multiply by 100)
+    //             currency: 'INR',
+    //             name: product.product_name,
+    //             description: product.details,
+    //             image: product.image,
+    //             order_id: '', // This will be generated from your backend
+    //             handler: function(response) {
+    //                 alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+    //                 // You can handle the successful payment here
+    //             },
+    //             prefill: {
+    //                 name: 'Customer Name', // You can get this from user input
+    //                 email: 'customer@example.com',
+    //                 contact: '9999999999'
+    //             },
+    //             notes: {
+    //                 address: 'Customer Address'
+    //             },
+    //             theme: {
+    //                 color: '#3399cc'
+    //             }
+    //         };
+    // 
+    //         // In a real app, you would first create an order on your backend
+    //         // and get the order_id before opening the Razorpay checkout
+    //         
+    //         try {
+    //             // For demo purposes, we'll create a client-side order
+    //             // In production, always create orders on your backend
+    //             const rzp = new Razorpay(options);
+    //             rzp.open();
+    //         } catch (error) {
+    //             console.error('Error opening Razorpay:', error);
+    //             alert('Error processing payment');
+    //         }
+    //     };
+
+
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [paymentStatus, setPaymentStatus] = useState(null);
+
+    const handleBuyNow = async () => {
+        setIsProcessing(true);
+        setPaymentStatus(null);
+
+        try {
+            // 1. Load Razorpay script
+            const razorpayLoaded = await loadRazorpay();
+
+            if (!razorpayLoaded) {
+                throw new Error('Failed to load payment gateway');
+            }
+
+            // 2. Create order (in production, call your backend API)
+            const orderResponse = await createRazorpayOrder(product);
+
+            // 3. Configure Razorpay options
+            const options = {
+                key: process.env.REACT_APP_RAZORPAY_KEY_ID, // From environment variables
+                amount: orderResponse.amount,
+                currency: orderResponse.currency,
+                order_id: orderResponse.id,
+                name: product.product_name,
+                description: `Purchase of ${product.product_name}`,
+                image: product.image || 'https://example.com/your_logo.png',
+                handler: function (response) {
+                    // Payment success handler
+                    setPaymentStatus('success');
+                    verifyPayment(response); // Call your backend to verify
+                },
+                prefill: {
+                    name: 'Customer Name', // Get from user input in real app
+                    email: 'customer@example.com',
+                    contact: '9876543210'
+                },
+                theme: {
+                    color: '#2563eb', // Blue color
+                    backdrop_color: '#00000080' // Semi-transparent overlay
+                }
+            };
+
+            // 4. Open Razorpay checkout
+            const rzp = new window.Razorpay(options);
+            rzp.on('payment.failed', (response) => {
+                setPaymentStatus('failed');
+                console.error('Payment failed:', response.error);
+            });
+            rzp.open();
+
+        } catch (error) {
+            console.error('Payment error:', error);
+            setPaymentStatus('error');
+        } finally {
+            setIsProcessing(false);
+        }
+    };
+
+    // Mock function - replace with actual API call to your backend
+    const createRazorpayOrder = async (product) => {
+        // In production, make an API call like:
+        // const response = await fetch('/api/create-order', {
+        //   method: 'POST',
+        //   body: JSON.stringify({ amount: product.price * 100 })
+        // });
+        // return await response.json();
+
+        return Promise.resolve({
+            id: `order_${Date.now()}`,
+            amount: product.price * 100, // in paise
+            currency: 'INR'
+        });
+    };
+
+    // Mock function - replace with actual API call
+    const verifyPayment = async (response) => {
+        // Call your backend to verify payment signature
+        console.log('Verifying payment:', response);
+    };
     return (
         <div style={styles.card}>
             <div style={styles.imageContainer}>
-                <img 
-                    src={product.image} 
-                    alt={product.product_name} 
-                    style={styles.productImage} 
+                <img
+                    src={product.image}
+                    alt={product.product_name}
+                    style={styles.productImage}
                 />
             </div>
             <div style={styles.productInfo}>
@@ -77,14 +200,88 @@ export function ProductCard({ product }) {
                 <p style={styles.description}>{product.details}</p>
                 <div style={styles.buttonContainer}>
                     <button style={styles.addToCartButton}>Add to Cart</button>
-                    <button style={styles.buyNowButton}>Buy Now</button>
+                    <button
+                        // style={styles.buyNowButton} 
+                        style={{
+                            ...styles.buyNowButton,
+                            ...(isProcessing ? styles.processingButton : {})
+                        }}
+                        onClick={handleBuyNow}
+                        disabled={isProcessing}
+                    >
+                        {isProcessing ? 'Processing...' : 'Buy Now'}</button>
                 </div>
+                {/* Payment status feedback */}
+                {paymentStatus === 'success' && (
+                    <div style={styles.successMessage}>
+                        Payment successful! Your order is confirmed.
+                    </div>
+                )}
+                {paymentStatus === 'failed' && (
+                    <div style={styles.errorMessage}>
+                        Payment failed. Please try again.
+                    </div>
+                )}
+                {paymentStatus === 'error' && (
+                    <div style={styles.errorMessage}>
+                        Error processing payment. Please contact support.
+                    </div>
+                )}
             </div>
         </div>
     );
 }
 
+
+// // Proper flow would be:
+// // 1. Call your backend to create order
+// const response = await fetch('/api/create-razorpay-order', {
+//     method: 'POST',
+//     body: JSON.stringify({ amount: product.price * 100, productId: product.id })
+// });
+// const orderData = await response.json();
+// 
+// // 2. Then open Razorpay with the order_id from your backend
+// const rzp = new Razorpay({
+//     ...options,
+//     order_id: orderData.id
+// });
+// rzp.open();
+
 const styles = {
+    card: {
+        /* your existing card styles */
+    },
+    buyNowButton: {
+        backgroundColor: '#2563eb',
+        color: 'white',
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        fontWeight: '600',
+        marginLeft: '10px',
+        transition: 'background-color 0.3s'
+    },
+    processingButton: {
+        backgroundColor: '#94a3b8',
+        cursor: 'not-allowed'
+    },
+    successMessage: {
+        marginTop: '15px',
+        padding: '10px',
+        backgroundColor: '#dcfce7',
+        color: '#166534',
+        borderRadius: '4px'
+    },
+    errorMessage: {
+        marginTop: '15px',
+        padding: '10px',
+        backgroundColor: '#fee2e2',
+        color: '#991b1b',
+        borderRadius: '4px'
+    },
     pageContainer: {
         padding: '20px',
         maxWidth: '1200px',
