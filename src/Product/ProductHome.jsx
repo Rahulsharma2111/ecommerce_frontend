@@ -214,7 +214,7 @@ export function ProductCard({ product }) {
             user_id: userId,
             quantity: '1',
             per_piece_rate: product.price,
-            total_amount: '30',
+            total_amount: product.price,
             mobile_number: mobileNumber,
             email: email,
             address: address,
