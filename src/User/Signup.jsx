@@ -43,6 +43,9 @@ function SignUp() {
                 // body: JSON.stringify(loginData),
             });
             response = await response.json();
+              localStorage.setItem("userToken",JSON.stringify(response.token));
+              localStorage.setItem("userId",JSON.stringify(response.user_id));
+              localStorage.setItem("user",JSON.stringify(response.user));
             if (response) {
                 alert("login successfully");
             }

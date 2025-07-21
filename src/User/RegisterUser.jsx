@@ -19,7 +19,9 @@ export default function RegisterForm(props) {
         state: '',
         zipcode: '',
         username: username || '',
-        password: password || ''
+        password: password || '',
+        block:false,
+        role:'user'
     });
     function handleInputChange(e) {
         console.log(e.target.value);
@@ -29,6 +31,10 @@ export default function RegisterForm(props) {
         });
     }
     function fromDataHandle(e) {
+        // setFormData({
+        //     ...formData,
+        //     
+        // })
         e.preventDefault();
         console.log(formData);
 
@@ -42,6 +48,7 @@ export default function RegisterForm(props) {
                 body: JSON.stringify(formData),
             });
             response = await response.json();
+            localStorage.setItem("userToken",JSON.stringify(response));
             if (response) {
                 alert("add successfully");
             }
