@@ -197,8 +197,15 @@ export function ProductCard({ product }) {
         setIsProcessing(true);
         setPaymentStatus(null);
         const userData = JSON.parse(localStorage.getItem("user"));
+        const userId = userData.id;
         const username = userData.username;
-        const userId = localStorage.getItem("userId");
+        const mobileNumber = userData.mobileNumber;
+        const email = userData.email;
+        const address = userData.houseNumber + ", " + userData.street + ", " + userData.address;
+        const district = userData.district;
+        const state = userData.state;
+        const zipcode = userData.zipcode;
+
         if (!userId) {
             throw new Error("No user Id found");
         }
@@ -208,11 +215,11 @@ export function ProductCard({ product }) {
             quantity: '1',
             per_piece_rate: product.price,
             total_amount: '30',
-            mobile_number: '9602353233',
-            email: 'rahul23@gmail.com',
-            address: 'bhankrota',
-            district: 'jaipur',
-            zipcode: '302026',
+            mobile_number: mobileNumber,
+            email: email,
+            address: address,
+            district: district,
+            zipcode: zipcode,
             status: 'pending',
             username: username
         };

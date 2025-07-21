@@ -23,24 +23,24 @@ const AnalyticsDashboard = () => {
       // Mock data - replace with actual API call
       setTimeout(() => {
         setDashboardData({
-          salesToday: 12450,
-          profitToday: 2840,
+          salesToday: 124,
+          profitToday: 284,
           topProducts: [
-            { id: 1, name: 'Wireless Earbuds', sales: 42, revenue: 4200 },
-            { id: 2, name: 'Smart Watch', sales: 38, revenue: 7600 },
-            { id: 3, name: 'Bluetooth Speaker', sales: 25, revenue: 2000 }
+            { id: 1, name: 'Wireless Earbuds', sales: 42, revenue: 420 },
+            { id: 2, name: 'Smart Watch', sales: 38, revenue: 760 },
+            { id: 3, name: 'Bluetooth Speaker', sales: 25, revenue: 200 }
           ],
           salesTrend: [
-            { day: 'Mon', sales: 4000 },
-            { day: 'Tue', sales: 3000 },
-            { day: 'Wed', sales: 5000 },
-            { day: 'Thu', sales: 2780 },
-            { day: 'Fri', sales: 8900 },
-            { day: 'Sat', sales: 7500 },
-            { day: 'Sun', sales: 4900 }
+            { day: 'Mon', sales: 15 },
+            { day: 'Tue', sales: 10 },
+            { day: 'Wed', sales: 5 },
+            { day: 'Thu', sales: 7 },
+            { day: 'Fri', sales: 8 },
+            { day: 'Sat', sales: 10 },
+            { day: 'Sun', sales: 9 }
           ],
           inventoryStatus: [
-            { name: 'In Stock', value: 75 },
+            { name: 'In Stock', value: 20 },
             { name: 'Low Stock', value: 15 },
             { name: 'Out of Stock', value: 10 }
           ]
